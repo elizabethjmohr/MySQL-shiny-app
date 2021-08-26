@@ -1,0 +1,11 @@
+name: caddisflyDB
+title:
+username:
+account: caddisflies
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4530400
+bundleId: 4959440
+url: https://caddisflies.shinyapps.io/caddisflyDB/
+when: 1629832676.32437
+lastSyncTime: 1629832676.32439
