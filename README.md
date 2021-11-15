@@ -1,2 +1,5 @@
-# MySQL-shiny-app
-R Shiny Application for entering data and loading it into a MySQL database.
+# Interface with caddisfly database
+
+Code and tools for building, updating, and querying the MySQL database for the "Caddisflies and Nutrient Spirals" project. 
+
+Access to the database is currently restricted to project contributors. 

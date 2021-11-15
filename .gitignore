@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 app/options.R
+DB_setup
