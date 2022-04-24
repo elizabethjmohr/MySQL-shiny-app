@@ -4,7 +4,7 @@
 #' @param fileName name of file
 #' @param dirName name of directory containing file
 #'
-#' @return tibble with columns for datetime, temperature, conductivity, and serial number
+#' @return tibble with columns for datetime, metric_name, and metric_value
 #' @export
 #'
 read_HOBOCondData <- function(serialNo, fileName, dirName){
@@ -61,6 +61,120 @@ read_HOBOCondData <- function(serialNo, fileName, dirName){
   )
 }
 
+#' Read in a single HOBO light logger text file
+#'
+#' @param serialNo Logger serial number
+#' @param fileName name of file
+#' @param dirName name of directory containing file
+#'
+#' @return tibble with columns for datetime, metric_name, and metric_value
+#' @export
+#'
+read_HOBOLightData <- function(serialNo, fileName, dirName){
+  # Get serial number from text file column names
+  serialNo_fromFile <- read_tsv(paste0(dirName, "/",fileName),
+                                n_max = 1,
+                                show_col_types = FALSE) %>%
+    names() %>%
+    `[`(2) %>%
+    str_sub(-8,-1)
+
+  # read in data if serial number from file matches serial number in column header
+  tryCatch(
+    {
+      # Check if serial number from file name matches serial number in column header
+      if(serialNo_fromFile != serialNo){
+        stop()
+      }
+      # Read the data
+      table <- read_tsv(paste0(dirName, "/",fileName),
+                        col_names = c("datetime",
+                                      "Temp_F",
+                                      "Intensity",
+                                      "endOfFile"),
+                        skip = 1,
+                        show_col_types = FALSE) %>%
+        select(1:3) %>%
+        mutate(reading_datetime = as_datetime(datetime, tz = "US/Mountain",  format= "%m/%d/%y %H:%M:%S")) %>%
+        drop_na(Intensity) %>%
+        mutate(serialNo = serialNo,
+               metric_name = "Light Intensity")%>%
+        select(reading_datetime,
+               value = Intensity,
+               metric_name,
+               serialNo)
+      return(table)
+    },
+    error = function(c){
+      message(paste0('Serial number from the file name (',
+                     serialNo,
+                     ') does not match the serial number in the file (',
+                     serialNo_fromFile,
+                     ') for file name of', fileName,'. Data from this file were not read.'))
+      return(NULL)
+    }
+  )
+}
+
+#' Read in a single HOBO light logger text file
+#'
+#' @param serialNo Logger serial number
+#' @param fileName name of file
+#' @param dirName name of directory containing file
+#'
+#' @return tibble with columns for datetime, metric_name, and metric_value
+#' @export
+#'
+read_HOBOPressureData <- function(serialNo, fileName, dirName){
+  # Get serial number from text file column names
+  serialNo_fromFile <- read_tsv(paste0(dirName, "/",fileName),
+                                n_max = 1,
+                                show_col_types = FALSE) %>%
+    names() %>%
+    `[`(2) %>%
+    str_sub(-8,-1)
+
+  # read in data if serial number from file matches serial number in column header
+  tryCatch(
+    {
+      # Check if serial number from file name matches serial number in column header
+      if(serialNo_fromFile != serialNo){
+        stop()
+      }
+      # Read the data
+      table <- read_tsv(paste0(dirName, "/",fileName),
+                        col_names = c("datetime",
+                                      "Pressure",
+                                      "Temp_F",
+                                      "coupler_detached",
+                                      "coupler_attached",
+                                      "connected",
+                                      "stopped",
+                                      "endOfFile"),
+                        skip = 1,
+                        show_col_types = FALSE) %>%
+        select(1:3) %>%
+        mutate(reading_datetime = as_datetime(datetime, tz = "US/Mountain",  format= "%m/%d/%y %H:%M:%S")) %>%
+        drop_na(Pressure) %>%
+        mutate(serialNo = serialNo,
+               metric_name = "Pressure")%>%
+        select(reading_datetime ,
+               value = Pressure,
+               metric_name,
+               serialNo)
+      return(table)
+    },
+    error = function(c){
+      message(paste0('Serial number from the file name (',
+                     serialNo,
+                     ') does not match the serial number in the file (',
+                     serialNo_fromFile,
+                     ') for file name of', fileName,'. Data from this file were not read.'))
+      return(NULL)
+    }
+  )
+}
+
 #' Read in and combine multiple HOBO conductivity logger
 #' text files within a single directory
 #'
@@ -68,7 +182,7 @@ read_HOBOCondData <- function(serialNo, fileName, dirName){
 #' @param startDate earliest date when the logger was programmed with format %m/%d/%y
 #' @param endDate latest date when the logger was programmed with format %m/%d/%y
 #' @param dirName name of directory with conductivity text files
-#' @param dataType one of Conductivity, Light, or Pressure
+#' @param datatype one of Conductivity, Light, or Pressure
 #'
 #' @return tibble with columns for datetime, temperature, conductivity, and serial number
 #' @export
@@ -83,9 +197,18 @@ read_HOBODir <- function(startDate, endDate, loggers, dirName, datatype = "Condu
            date >= lubridate::as_date(startDate),
            date <= lubridate::as_date(endDate))
   serialNumbers <- list.files(path = dirName)
-  # TODO: Set function based on datatype
+  # Set function based on datatype
+  if(datatype == "Conductivity"){
+    func <- read_HOBOCondData
+  }else if(datatype == "Light"){
+    func <- read_HOBOLightData
+  }else if(datatype == "Pressure"){
+    func <- read_HOBOPressureData
+  }else{
+    stop("data type must be either Conductivity, Light, or Pressure")
+  }
   # Read in files
-  data <- map2(fileList$loggerSerialNo, fileList$fileName, read_HOBOCondData, dirName = dirName)%>%
+  data <- map2(fileList$loggerSerialNo, fileList$fileName, func, dirName = dirName)%>%
     bind_rows()
   return(data)
 }
@@ -164,7 +287,7 @@ read_miniDOTDir <- function(dir, serialNos, startDate = as_date("2021-01-01"), e
 #' @return inserts records into the database and returns the number of records inserted
 #' @export
 #'
-loadLoggerData <- function(cn, data){
+load_loggerData <- function(cn, data){
 
   n <- DBI::dbExecute(cn,
                  statement = paste("INSERT IGNORE INTO Readings (deployment_id, reading_datetime, metric_id, value) VALUES",
@@ -183,31 +306,33 @@ loadLoggerData <- function(cn, data){
   return(n)
 }
 
-#'Break up logger data by
+#' Break up logger data into a list of tibbles
 #'
-#' @param data
+#' @param data tibble to split
 #'
 #' @return A list of tibbles broken up first by date and, if needed,
 #' into smaller subsets with a maximum of 10,000 rows
 #' @export
 #'
-splitLoggerData <- function(data){
+split_loggerData <- function(data){
   data %>%
     mutate(date = as_date(reading_datetime)) %>%
     group_split(date) %>%
-    map(~.x %>% mutate(group = ceiling(row_number()/10000)) %>% group_split(group)) %>%
+    map(~.x %>% mutate(group = ceiling(row_number()/10000)) %>%
+          group_split(group)) %>%
     unlist(recursive = FALSE)
 }
 
 #' Load a list of tibbles into the database
 #'
 #' @param dataList list of tibbles
+#' @param cn DBI connection object
 #'
 #' @return inserts records into the database and returns a tibble with
 #' the number of records inserted for each data chunk
 #' @export
 #'
-loadLoggerDataList <- function(dataList){
+load_loggerDataList <- function(dataList, cn){
   recordsChanged <- tibble(
     date = map(dataList, ~.x$date[1]) %>%
       reduce(c),
@@ -215,7 +340,7 @@ loadLoggerDataList <- function(dataList){
   )
 
   for(i in 1:length(dataList)){
-    recordsChanged[i, "n"] <- loadLoggerData(cn, dataList[[i]])
+    recordsChanged[i, "n"] <- load_loggerData(cn, dataList[[i]])
   }
 
   return(recordsChanged)

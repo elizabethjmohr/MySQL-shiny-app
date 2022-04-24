@@ -2,16 +2,13 @@ Package: caddisDB
 Title: Load and Query Data from Caddisfly Databse
 Version: 0.0.0.9000
 Authors@R: 
-    person("Elizabeth", "Mohr", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("Elizabeth", "Mohr", , "first.last@example.com", role = c("aut", "cre"))
 Description: This package contains functions for loading data into and querying data from a MySQL database. The database contains data collected during a set of experiments for investigating the impact of net-spinning caddisflies on hyporheic exchange and nutrient spiraling.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports:
   tidyr, dplyr, readr, purrr, tibble, stringr, magrittr, lubridate, readxl,
   DBI, RMariaDB,
-  credentials, callr, ssh
-
+  credentials, callr, ssh, keyring

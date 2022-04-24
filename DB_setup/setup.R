@@ -20,9 +20,13 @@ metrics <- tibble(
                   "N20",
                   "15N-N2",
                   "15N-N20",
+                  "15N-NO3",
                   "Conductivity",
                   "Specific Conductance",
-                  "Temperature"),
+                  "Temperature",
+                  "Light Intensity",
+                  "Pressure",
+                  "Caddisflies"),
   metric_units = c("ppb_as_N",
                    "ppb_as_N",
                    "ppb_as_N",
@@ -35,9 +39,13 @@ metrics <- tibble(
                    "ppm",
                    "atom %",
                    "atom %",
+                   "atom %",
                    "uS/cm",
                    "uS/cm",
-                   "degrees_C"))
+                   "degrees_C",
+                   "lumens/ft^2",
+                   "psi",
+                   "#"))
 
 DBI::dbExecute(cn,
                statement = paste("INSERT IGNORE INTO Metrics (metric_name, metric_units)",
@@ -98,7 +106,8 @@ locations <- tibble(
                     "Salt Slug", "Blank",
                     "Cherry Creek",
                     "Leon Johnson Hall 819",
-                    "Temperature Bath")
+                    "Temperature Bath",
+                    "Spike Solution")
 )
 
 DBI::dbExecute(cn,

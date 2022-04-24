@@ -196,6 +196,7 @@ CREATE TABLE IF NOT EXISTS `ecometri_caddis`.`Samples` (
   `location_id` INT NOT NULL,
   `sample_datetime` DATETIME NOT NULL,
   `sample_notes` VARCHAR(1000) NULL,
+  `sample_volume_mL` FLOAT NULL,
   PRIMARY KEY (`sample_id`),
   INDEX `location_id_idx` (`location_id` ASC),
   UNIQUE INDEX `sample_name_UNIQUE` (`sample_name` ASC),
@@ -314,12 +315,10 @@ CREATE TABLE IF NOT EXISTS `ecometri_caddis`.`Observations` (
   `observation_value` FLOAT NOT NULL,
   `location_id` INT NOT NULL,
   `observation_date` DATE NOT NULL,
-  `observation_time` TIME NOT NULL,
-  `time_flag` BIT(1) NOT NULL,
+  `observation_time` TIME NULL,
   PRIMARY KEY (`observation_id`),
-  INDEX `location_id_idx` (`location_id` ASC),
-  INDEX `metric_id_idx` (`metric_id` ASC),
-  UNIQUE INDEX `observation_UNIQUE` (`observation_date` ASC, `location_id` ASC, `metric_id` ASC, `observation_time` ASC),
+  INDEX `location_id_idx` (`location_id`),
+  INDEX `metric_id_idx` (`metric_id`),
   CONSTRAINT `location_id_obs`
     FOREIGN KEY (`location_id`)
     REFERENCES `ecometri_caddis`.`Locations` (`location_id`)
