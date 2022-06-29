@@ -12,7 +12,7 @@ order to prepare the database for loading of experimental data. It can be used
 to add new valid entries within each of the tables listed above by adding a 
 new row to the appropriate tibble and executing the corresponding INSERT statement.
 
-*insert.R*: reads in experimental data from storage on sharepoint site 
+- *insert.R*: reads in experimental data from storage on sharepoint site 
 and loads it into the database. 
 
 - *create_eml_metadata.R* : generates a metadata file using the EML schema to
