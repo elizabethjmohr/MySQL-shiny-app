@@ -1,3 +1,9 @@
+# The purpose of this script is to define valid metrics, labs, loggers,
+# locations, and treatments in order to prepare the database for
+# loading of experimental data. It can be used to add new valid entries
+# within each of the tables listed above by adding a new row to the appropriate
+# tibble and executing the corresponding INSERT statement.
+
 library(tidyverse)
 library(DBI)
 library(caddisDB)

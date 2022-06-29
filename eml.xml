@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="c38178d1-c185-4e14-96f8-58fe04e65b8f" system="uuid" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+  <dataset>
+    <abstract>The aim of this research was to experimentally investigate the effect
+of net-spinning caddisfly larvae on rates of hyporheic exchange and nitrate uptake.
+To do this, we constructed 15 circular stream mesocosms and released caddisflies into each
+according to one of five caddisfly density treatments. We measured hyporheic exchange
+several times over the course of the experiment by releasing a slug of NaCl solution to
+each mescocosm and measuring specific conductance. At the end of the experiment,
+we measured nitrate uptake by adding a slug of 15N-enriched KNO3 solution to each mescocosm
+and then collecting samples several times over the course of 8 hours. Samples were analyzed for
+concentrations and isotopic concentrations of nitrate and N2-gas. The data from these experiments
+is stored in a MySQL database which is documented here.</abstract>
+    <dataTable>
+      <entityName>Treatments</entityName>
+      <entityDescription>Experimental treatments applied to mesocosms</entityDescription>
+      <attributeList>
+        <attribute>
+          <attributeName>treatment_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>treatment_name</attributeName>
+          <attributeDefinition>experimental treatment description (e.g., 200 caddisflies per square meter)</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>treatment description</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+    </dataTable>
+    <dataTable.1>
+      <attributeList>
+        <attribute>
+          <attributeName>assignment_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>location_id</attributeName>
+          <attributeDefinition>foreign key referencing Locations table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>treatment_id</attributeName>
+          <attributeDefinition>foreign key reference Treatments table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>assignment_start</attributeName>
+          <attributeDefinition>date when treatment was applied at location</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>assignment_end</attributeName>
+          <attributeDefinition>date when treatment ended at location</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Experimental treatment assignments (i.e., which mesocosms were subject to which treatments)</entityDescription>
+      <entityName>Assignments</entityName>
+    </dataTable.1>
+    <dataTable.10>
+      <attributeList>
+        <attribute>
+          <attributeName>reading_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>deployment_id</attributeName>
+          <attributeDefinition>foreign key referencing a deployment in the Deployments table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>metric_id</attributeName>
+          <attributeDefinition>foreign key referencing a metric in the Metrics table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>reading_datetime</attributeName>
+          <attributeDefinition>date-time 0f reading</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD hh:mm:ss</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>value</attributeName>
+          <attributeDefinition>value of metric recorded by logger</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Logger readings</entityDescription>
+      <entityName>Readings</entityName>
+    </dataTable.10>
+    <dataTable.11>
+      <attributeList>
+        <attribute>
+          <attributeName>observation_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>location_id</attributeName>
+          <attributeDefinition>foreign key referencing a locaion in the Locations table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>metric_id</attributeName>
+          <attributeDefinition>foreign key referencing a metric in the Metrics table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>observation_date</attributeName>
+          <attributeDefinition>date of observation</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>observation_time</attributeName>
+          <attributeDefinition>time of observation</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>hh:mm:ss</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>observation_value</attributeName>
+          <attributeDefinition>value of metric measured</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Observations, defined as any measurement not associated with a logger reading or water sample (e.g., caddisfly counts, meter readings) </entityDescription>
+      <entityName>Observations</entityName>
+    </dataTable.11>
+    <dataTable.12>
+      <attributeList>
+        <attribute>
+          <attributeName>sample_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>location_id</attributeName>
+          <attributeDefinition>foreign key referencing a location in the Locations table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>sample_datetime</attributeName>
+          <attributeDefinition>date/time when sample was collected</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD hh:mm:ss</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>sample_notes</attributeName>
+          <attributeDefinition>notes about sample</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>notes about sample</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>sample_volume_mL</attributeName>
+          <attributeDefinition>volume of water removed from mesocosm during sample collection</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>mL</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Water samples</entityDescription>
+      <entityName>Samples</entityName>
+    </dataTable.12>
+    <dataTable.13>
+      <attributeList>
+        <attribute>
+          <attributeName>measurement_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>sample_id</attributeName>
+          <attributeDefinition>foreign key referencing a sample in the Samples table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>metric_id</attributeName>
+          <attributeDefinition>foreign key referencing a metric in the Metrics table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>batch_id</attributeName>
+          <attributeDefinition>foreign key referencing a batch in the Batches table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>bd_flag</attributeName>
+          <attributeDefinition>indicates whether sample is above (1) or below (0) the method detection limit</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>measurement_value</attributeName>
+          <attributeDefinition>value of metric measured</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Measurements made on water samples analyzed at analytical lab</entityDescription>
+      <entityName>Measurements</entityName>
+    </dataTable.13>
+    <dataTable.2>
+      <attributeList>
+        <attribute>
+          <attributeName>location_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>location_name</attributeName>
+          <attributeDefinition>name of location</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>name of location</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Locations (e.g., Flume A)</entityDescription>
+      <entityName>Locations</entityName>
+    </dataTable.2>
+    <dataTable.3>
+      <attributeList>
+        <attribute>
+          <attributeName>metric_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>metric_name</attributeName>
+          <attributeDefinition>name of metric</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>name of metric</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>metric_units</attributeName>
+          <attributeDefinition>metric units</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>metric units</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Metrics measured during experiment with units (e.g., nitrate (ppb NO3-N))</entityDescription>
+      <entityName>Metrics</entityName>
+    </dataTable.3>
+    <dataTable.4>
+      <attributeList>
+        <attribute>
+          <attributeName>make_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>make_name</attributeName>
+          <attributeDefinition>logger brand name (e.g. HOBO)</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>logger brand name</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Brands of loggers used in experiment (e.g., HOBO)</entityDescription>
+      <entityName>Makes</entityName>
+    </dataTable.4>
+    <dataTable.5>
+      <attributeList>
+        <attribute>
+          <attributeName>model_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>model_name</attributeName>
+          <attributeDefinition>name of logger model (e.g. MiniDOT)</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>name of logger model</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Logger models (e.g., MiniDOT)</entityDescription>
+      <entityName>Models</entityName>
+    </dataTable.5>
+    <dataTable.6>
+      <attributeList>
+        <attribute>
+          <attributeName>logger_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>serial_No</attributeName>
+          <attributeDefinition>logger serial number</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>make_id</attributeName>
+          <attributeDefinition>foreign key referencing a make in the Makes table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>model_id</attributeName>
+          <attributeDefinition>foreign key referencing a model in the models table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Individual loggers used in experiment</entityDescription>
+      <entityName>Loggers</entityName>
+    </dataTable.6>
+    <dataTable.7>
+      <attributeList>
+        <attribute>
+          <attributeName>lab_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>lab_name</attributeName>
+          <attributeDefinition>name of analytical lab</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>name of analytical lab</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Analytical labs that analyzed samples from the experiment</entityDescription>
+      <entityName>Labs</entityName>
+    </dataTable.7>
+    <dataTable.8>
+      <attributeList>
+        <attribute>
+          <attributeName>batch_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>lab_id</attributeName>
+          <attributeDefinition>foreign key referencing a lab in the Labs table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>batch_date</attributeName>
+          <attributeDefinition>date when batch of samples were analyzed</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>filename</attributeName>
+          <attributeDefinition>name of file containing data received from lab</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>name of file containing data received from lab</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription/>
+      <entityName>Batches</entityName>
+    </dataTable.8>
+    <dataTable.9>
+      <attributeList>
+        <attribute>
+          <attributeName>deployment_id</attributeName>
+          <attributeDefinition>primary key</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>logger_id</attributeName>
+          <attributeDefinition>foreign key referencing a logger in the Loggers table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>location_id</attributeName>
+          <attributeDefinition>foreign key referencing a location in the Location table</attributeDefinition>
+          <storageType>float</storageType>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>int</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>deployment_start</attributeName>
+          <attributeDefinition>date when logger was deploymed</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>deployment_end</attributeName>
+          <attributeDefinition>date when logger was retrieved</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+              <dateTimeDomain/>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <entityDescription>Deployments, each defined by the placement of a logger at a location for a certain period of time</entityDescription>
+      <entityName>Deployments</entityName>
+    </dataTable.9>
+    <title>The Effect of Net-Spinning Caddisflies on Hyporheic Exchange and Nitrate Uptake in Stream Mesocosms</title>
+  </dataset>
+</eml:eml>

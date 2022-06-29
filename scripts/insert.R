@@ -1,6 +1,5 @@
-# This script is a template for adding new records to the database, and could
-# also be used to recreate the database from scratch if needed.
-# TODO: use targets to manage dependencies and update DB as needed?
+# This script loads experimental data stored in our Sharepoint site into the
+# database. It uses several, documented functions from the caddisDB package.
 
 library(tidyverse)
 library(lubridate)
